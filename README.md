@@ -1,3 +1,6 @@
+**Work in progress. Questo repository sarà aggiornato a breve con tutti i file necessari.**
+
+
 ## Introduzione
 
 `tnt-downloader` è uno script scritto in Python che permette di cercare e scaricare file torrent da [TNTVillage](http://tntvillage.scambioetico.org).
