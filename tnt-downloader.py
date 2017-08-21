@@ -36,7 +36,6 @@ dl_addr = "//div[@class='showrelease_tb']/table/tr[{}]/td[1]/a/@href"
 title_str = "\033[1m{}\033[0m"
 desc_str = "\033[2m{}\033[0m"
 dloading_str = "Download del file {} di {} in corso..."
-no_results_str = "\033[31mLa ricerca non ha prodotto nessun risultato.\033[0m"
 loading_str = "Caricamento dati in corso..."
 prompt_dl = "[0-9] Download: "
 prompt_dl_next = "[0-9] Download / [s] Successivo: "
@@ -47,10 +46,13 @@ next_keys = ("s", "S")
 prev_keys = ("p", "P")
 all_keys = next_keys + prev_keys
 if (os.name != 'nt'):
+    no_results_str = "\033[31mLa ricerca non ha prodotto nessun risultato.\033[0m"
     _, columns = os.popen('stty size', 'r').read().split()
 else:
-    # Windows does not support this
-    columns = 80
+    no_results_str = "\033[1mLa ricerca non ha prodotto nessun risultato.\033[0m"
+    con_data = os.popen("mode con", "r").read()
+    print(con_data)
+    sys.exit()
 
 
 

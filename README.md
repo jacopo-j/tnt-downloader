@@ -24,10 +24,11 @@ chmod +x ./tnt-downloader.py
 
 ## Installazione su Windows
 
-* Scaricare ed installare [Python](http://www.python.it/download/), preferibilmente Python 3. **IMPORTANTE: durante l'installazione selezionare la casella *Add Python to environment variables***;
+* Scaricare ed installare [Python](http://www.python.it/download/), preferibilmente Python 3. **IMPORTANTE: durante l'installazione selezionare la casella *Add Python to PATH***;
+* riavviare il computer (consigliato);
 * scaricare questo repository come file zip cliccando sul bottone verde nella parte in alto a destra della pagina;
 * estrarre il file zip in una cartella;
-* aprire il file `tntdl-win-setup.bat` (la finestra del Prompt dei Comandi si chiuderà automaticamente);
+* eseguire il file `tntdl-win-setup.bat`;
 * per eseguire lo script, aprire il file `tnt-downloader.bat`.
 
 ## Utilizzo

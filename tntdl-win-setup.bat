@@ -1,1 +1,3 @@
-%LOCALAPPDATA%\Programs\Python\Python36\Scripts\pip.exe install future lxml requests win-unicode-console
+@echo off
+pip install future lxml requests win-unicode-console
+pause
