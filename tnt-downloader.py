@@ -51,9 +51,8 @@ if (os.name != 'nt'):
 else:
     no_results_str = "\033[1mLa ricerca non ha prodotto nessun risultato.\033[0m"
     con_data = os.popen("mode con", "r").read()
-    print(con_data)
-    sys.exit()
-
+    cols = con_data.split("\n")[4]
+    columns = re.findall(" *.+: *(\d+)", cols)[0]
 
 
 def valid_dl(value, start, stop):
