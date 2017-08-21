@@ -49,7 +49,7 @@ if (os.name != 'nt'):
     no_results_str = "\033[31mLa ricerca non ha prodotto nessun risultato.\033[0m"
     _, columns = os.popen('stty size', 'r').read().split()
 else:
-    no_results_str = "\033[1mLa ricerca non ha prodotto nessun risultato.\033[0m"
+    no_results_str = "La ricerca non ha prodotto nessun risultato."
     con_data = os.popen("mode con", "r").read()
     cols = con_data.split("\n")[4]
     columns = re.findall(" *.+: *(\d+)", cols)[0]
