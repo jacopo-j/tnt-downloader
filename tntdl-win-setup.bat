@@ -1,3 +1,4 @@
 @echo off
-pip install future lxml requests win-unicode-console
+pip install -r requirements.txt
+pip install win-unicode-console
 pause

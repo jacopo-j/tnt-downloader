@@ -16,7 +16,7 @@ Questo script è stato testato su **macOS**, **Linux** e **Windows**. Dovrebbe e
 
 
 ```
-pip install future lxml requests
+pip install -r requirements.txt
 git clone https://github.com/jacopo-j/tnt-downloader.git
 cd tnt-downloader
 chmod +x ./tnt-downloader.py
