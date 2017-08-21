@@ -28,8 +28,9 @@ chmod +x ./tnt-downloader.py
 * riavviare il computer (consigliato);
 * scaricare questo repository come file zip cliccando sul bottone verde nella parte in alto a destra della pagina;
 * estrarre il file zip in una cartella;
-* eseguire il file `tntdl-win-setup.bat`;
-* per eseguire lo script, aprire il file `tnt-downloader.bat`.
+* eseguire il file `tntdl-win-setup.bat` per installare automaticamente i moduli di Python richiesti.
+
+Per una questione di praticità, si consiglia agli utenti Windows di eseguire lo script tramite il file `tntdl-windows.bat` invece che direttamente dal file dello script `tnt-downloader.py`.
 
 ## Utilizzo
 
