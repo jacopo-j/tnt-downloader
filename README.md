@@ -16,9 +16,9 @@ Questo script è stato testato su **macOS**, **Linux** e **Windows**. Dovrebbe e
 
 
 ```
-pip install -r requirements.txt
 git clone https://github.com/jacopo-j/tnt-downloader.git
 cd tnt-downloader
+pip install -r requirements.txt
 chmod +x ./tnt-downloader.py
 ```
 
