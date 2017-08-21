@@ -43,7 +43,7 @@ Di default lo script mostra 7 risultati per pagina in modo da agevolarne la visu
 ## Esempio
 
 <pre>
-utente@host:~$ ./tntsearch.py "rick and morty"
+utente@host:~$ ./tnt-downloader.py "rick and morty"
 
 Caricamento dati in corso...
 
@@ -72,7 +72,7 @@ Download del file 2 di 2 in corso...</pre>
 
 ## Nota bene
 
-* I server di TNT soffrono di problemi di sovraffollamento, quindi effettuano rigidi controlli sulle richieste effettuate. Troppe richieste in un arco di tempo ridotto comportano il ban del proprio indirizzo IP. Usate questo script con un minimo di buon senso.
+* I server di TNT soffrono di sovraffollamento, quindi effettuano rigidi controlli sulle richieste effettuate. Troppe richieste in un arco di tempo ridotto comportano il ban del proprio indirizzo IP. Usate questo script con un minimo di buon senso.
 
 
 * L'autore dello script non è in nessun modo affiliato o legato a TNTVillage. Non è stato autorizzato dai proprietari del sito a creare questo script e non l'ha fatto su richiesta o per conto dei suoi utenti.
