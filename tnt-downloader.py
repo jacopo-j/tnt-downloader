@@ -13,6 +13,8 @@ import os
 import re
 import textwrap
 import argparse
+import colorama
+from colorama import Fore, Back, Style
 try:
     import readline
 except ImportError:
@@ -252,6 +254,9 @@ def do_search(search_input, chunks_size):
 
 
 def main():
+    # initialize colorama
+    colorama.init()
+
     # Parse command line arguments
     parser = argparse.ArgumentParser(description=progr_desc)
     parser.add_argument("query", metavar="query", type=str, help=query_desc)
