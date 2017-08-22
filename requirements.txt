@@ -2,3 +2,4 @@ future
 lxml
 requests
 colorama
+terminaltables

@@ -34,9 +34,11 @@ Per una questione di praticità, si consiglia agli utenti Windows di eseguire lo
 
 ## Utilizzo
 
-Lo script si utilizza passando come argomento la stringa da cercare su TNTVillage. I risultati vengono mostrati sotto forma di elenco numerato e sono suddivisi in pagine.
+Lo script si utilizza passando come argomento la stringa da cercare su TNTVillage. I risultati vengono mostrati sotto forma di tabella e sono suddivisi in pagine.
 
-Per scaricare uno o più torrent tra quelli mostrati, scrivere i relativi numeri separati da una virgola. Per passare alla pagina successiva scrivere `s`; per tornare alla precedente `p`.
+Le colonne della tabella mostrano, da sinistra a destra: il numero del torrent, il numero di leech, il numero di seed e il titolo del torrent.
+
+Per scaricare uno o più torrent tra quelli mostrati nella tabella, scrivere i relativi numeri separati da una virgola. Per passare alla pagina successiva scrivere `s`; per tornare alla precedente `p`.
 
 Di default lo script mostra 7 risultati per pagina in modo da agevolarne la visualizzazione. Se utilizzate un terminale più grande del normale, potreste voler aumentare il numero dei risultati per pagina. Potete farlo utilizzando l'opzione `-m` quando eseguite lo script.
 
@@ -47,28 +49,33 @@ utente@host:~$ ./tnt-downloader.py "rick and morty"
 
 Caricamento dati in corso...
 
-[01]	<b>Rick and Morty S03E01</b>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[720p - H264 - Eng Ac3 - Softsub Ita Eng] HDTVrip
-
-[02]	<b>Rick and Morty S02E01-10</b>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Bdrip 720p - H264 - Ita Eng Ac3 - Softsub Ita Eng]
-
-[03]	<b>Rick and Morty S02e01-10</b>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[H264 - Eng Aac - SoftSub Ita Eng]  Animation
-
-[04]	<b>Rick and Morty S01E07-11</b>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[BDMux 1080p - H264 - Ita Eng Ac3 - Sub Ita Eng] Cosmic horror
-
-[05]	<b>Rick and Morty S01E01-06</b>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[BDMux 1080p - H264 - Ita Eng Ac3 - Sub Ita Eng] Cosmic horror
-
-[06]	<b>Rick and Morty s01e01-11</b>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[H264 - Eng Aac - SoftSub Ita Eng]  Animation
-
+┌────┬────┬────┬────────────────────────────────────────────────────────────────┐
+│  <b>#</b> │  <b>L</b> │  <b>S</b> │ <b>Titolo</b>                                                         │
+├────┼────┼────┼────────────────────────────────────────────────────────────────┤
+│ <b>01</b> │  <span style="color:magenta"><b>1</b></span> │ <span style="color:green"><b>12</b></span> │ <b>Rick and Morty S03E01</b>                                          │
+│    │    │    │ <span style="color:grey">[720p - H264 - Eng Ac3 - Softsub Ita Eng] HDTVrip</span>              │
+│    │    │    │                                                                │
+│ <b>02</b> │  <span style="color:magenta"><b>0</b></span> │ <span style="color:green"><b>10</b></span> │ <b>Rick and Morty S02E01-10</b>                                       │
+│    │    │    │ <span style="color:grey">[Bdrip 720p - H264 - Ita Eng Ac3 - Softsub Ita Eng]</span>            │
+│    │    │    │                                                                │
+│ <b>03</b> │  <span style="color:magenta"><b>0</b></span> │  <span style="color:green"><b>3</b></span> │ <b>Rick and Morty S02e01-10</b>                                       │
+│    │    │    │ <span style="color:grey">[H264 - Eng Aac - SoftSub Ita Eng]  Animation</span>                  │
+│    │    │    │                                                                │
+│ <b>04</b> │ <span style="color:magenta"><b>11</b></span> │ <span style="color:green"><b>24</b></span> │ <b>Rick and Morty S01E07-11</b>                                       │
+│    │    │    │ <span style="color:grey">[BDMux 1080p - H264 - Ita Eng Ac3 - Sub Ita Eng] Cosmic horror</span> │
+│    │    │    │                                                                │
+│ <b>05</b> │ <span style="color:magenta"><b>11</b></span> │ <span style="color:green"><b>26</b></span> │ <b>Rick and Morty S01E01-06</b>                                       │
+│    │    │    │ <span style="color:grey">[BDMux 1080p - H264 - Ita Eng Ac3 - Sub Ita Eng] Cosmic horror</span> │
+│    │    │    │                                                                │
+│ <b>06</b> │  <span style="color:magenta"><b>0</b></span> │  <span style="color:green"><b>7</b></span> │ <b>Rick and Morty s01e01-11</b>                                       │
+│    │    │    │ <span style="color:grey">[H264 - Eng Aac - SoftSub Ita Eng]  Animation</span>                  │
+└────┴────┴────┴────────────────────────────────────────────────────────────────┘
 [0-9] Download: 2, 4
 
 Download del file 1 di 2 in corso...
 Download del file 2 di 2 in corso...</pre>
+
+L'esempio rappresenta il download del secondo e del quarto torrent mostrati nella tabella.
 
 ## Nota bene
 

@@ -11,10 +11,10 @@ from lxml import html
 from time import sleep
 import os
 import re
-import textwrap
 import argparse
 import colorama
-from colorama import Fore, Back, Style
+from colorama import Fore, Style
+from terminaltables import SingleTable
 try:
     import readline
 except ImportError:
@@ -25,6 +25,7 @@ try:
 except NameError:
    pass
 
+
 # Strings and constants
 progr_desc = "Cerca e scarica torrent da TNTVillage."
 query_desc = "termine di ricerca"
@@ -34,16 +35,21 @@ tot_pag_addr = "//div[@class='pagination']/form/span/b[3]/text()"
 result_table_addr = "//div[@class='showrelease_tb']/table/tr"
 title_addr = "./td[7]/a/text()"
 desc_addr = "./td[7]/text()"
+leech_addr = "./td[4]/text()"
+seed_addr = "./td[5]/text()"
 dl_addr = "//div[@class='showrelease_tb']/table/tr[{}]/td[1]/a/@href"
-title_str = Style.BRIGHT + "{}" + Style.RESET_ALL
-desc_str = Style.DIM + "{}" + Style.RESET_ALL
+title_str = Style.BRIGHT + "{}" + Style.RESET_ALL + "\n" + Style.DIM + "{}" + Style.RESET_ALL + "{}"
+count_str = Style.BRIGHT + "{:02}" + Style.RESET_ALL
+seed_str = Style.BRIGHT + Fore.GREEN + "{}" + Style.RESET_ALL
+leech_str = Style.BRIGHT + Fore.MAGENTA + "{}" + Style.RESET_ALL
 dloading_str = "Download del file {} di {} in corso..."
 loading_str = "Caricamento dati in corso..."
-prompt_dl = "[0-9] Download: "
-prompt_dl_next = "[0-9] Download / [s] Successivo: "
-prompt_dl_prev = "[0-9] Download / [p] Precedente: "
-prompt_dl_prev_next = "[0-9] Download / [p] Precedente / [s] Successivo: "
+prompt_dl = "[#] Download: "
+prompt_dl_next = "[#] Download / [s] Successivo: "
+prompt_dl_prev = "[#] Download / [p] Precedente: "
+prompt_dl_prev_next = "[#] Download / [p] Precedente / [s] Successivo: "
 no_results_str = Fore.RED + "La ricerca non ha prodotto nessun risultato." + Fore.RESET
+table_header = [Style.BRIGHT + "#" + Style.RESET_ALL, Style.BRIGHT + "L" + Style.RESET_ALL, Style.BRIGHT + "S" + Style.RESET_ALL, Style.BRIGHT + "Titolo" + Style.RESET_ALL]
 next_keys = ("s", "S")
 prev_keys = ("p", "P")
 all_keys = next_keys + prev_keys
@@ -71,6 +77,13 @@ def valid_dl(value, start, stop):
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def str_fit(string, width):
+    # Adapts a string to fit a certain width
+    if (len(string) <= width):
+        return string + " " * (width - len(string))
+    return string[:(width - 3)] + "..."
 
 
 def do_search(search_input, chunks_size):
@@ -135,22 +148,63 @@ def do_search(search_input, chunks_size):
                 # Explanation below
                 cur_chunk = len(chunks) - 1
 
+            table_data = [table_header]
+            title_width = float("inf")
+
             for row in chunks[cur_chunk]:
-                # This below is just for aesthetic reasons.
-                title_text = textwrap.TextWrapper(
-                    initial_indent="[{:02}]\t".format(count),
-                    width=int(columns),
-                    subsequent_indent="        ")
-                desc_text = textwrap.TextWrapper(
-                    initial_indent="        ",
-                    width=int(columns),
-                    subsequent_indent="        ")
-                print(title_text.fill(
-                    title_str.format(row.xpath(title_addr)[0].strip())))
-                print(desc_text.fill(
-                    desc_str.format(row.xpath(desc_addr)[0].strip())))
-                print()
+                # Table width check
+                prev_title_width = title_width
+                leech = row.xpath(leech_addr)[0].strip()
+                seed = row.xpath(seed_addr)[0].strip()
+                count_space = len(str(count))
+                if (count_space <= 1):
+                    count_space = 2
+                leech_space = len(leech)
+                if (leech_space <= 1):
+                    leech_space = 2
+                seed_space = len(seed)
+                if (seed_space <= 1):
+                    seed_space = 2
+                title_width = min(
+                    int(columns)
+                        - (count_space + leech_space + seed_space + 13),
+                    prev_title_width)
+
+            for idx, row in enumerate(chunks[cur_chunk]):
+                # Actual table formatting
+                if (sys.version_info.major == 2):
+                    # If we are on Python 2, we need to encode the
+                    # title and description strings to utf-8.
+                    title = row.xpath(title_addr)[0].replace(u'\xa0', u"").encode("utf-8").strip()
+                    desc = row.xpath(desc_addr)[0].replace(u'\xa0', u"").encode("utf-8").strip()
+                else:
+                    title = row.xpath(title_addr)[0].strip()
+                    desc = row.xpath(desc_addr)[0].strip()
+
+                title_ell = str_fit(title, title_width)
+                desc_ell = str_fit(desc, title_width)
+
+                if (idx == len(chunks[cur_chunk]) - 1):
+                    separator = ""
+                else:
+                    separator = "\n"
+
+                leech = row.xpath(leech_addr)[0].strip()
+                seed = row.xpath(seed_addr)[0].strip()
+
+                table_data.append([
+                    count_str.format(count),
+                    leech_str.format(int(leech)),
+                    seed_str.format(int(seed)),
+                    title_str.format(title_ell, desc_ell, separator)])
+
                 count += 1
+
+            table = SingleTable(table_data)
+            table.justify_columns[0] = "right"
+            table.justify_columns[1] = "right"
+            table.justify_columns[2] = "right"
+            print(table.table)
 
             results_per_chunk = len(chunks[cur_chunk])
 
