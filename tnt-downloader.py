@@ -44,15 +44,16 @@ seed_str = Style.BRIGHT + Fore.GREEN + "{}" + Style.RESET_ALL
 leech_str = Style.BRIGHT + Fore.MAGENTA + "{}" + Style.RESET_ALL
 dloading_str = "Download del file {} di {} in corso..."
 loading_str = "Caricamento dati in corso..."
-prompt_dl = "[#] Download: "
-prompt_dl_next = "[#] Download / [s] Successivo: "
-prompt_dl_prev = "[#] Download / [p] Precedente: "
-prompt_dl_prev_next = "[#] Download / [p] Precedente / [s] Successivo: "
+prompt_dl = "[#] Download / [q] Esci: "
+prompt_dl_next = "[#] Download / [s] Successivo / [q] Esci: "
+prompt_dl_prev = "[#] Download / [p] Precedente / [q] Esci: "
+prompt_dl_prev_next = "[#] Download / [p] Precedente / [s] Successivo / [q] Esci: "
 no_results_str = Fore.RED + "La ricerca non ha prodotto nessun risultato." + Fore.RESET
 table_header = [Style.BRIGHT + "#" + Style.RESET_ALL, Style.BRIGHT + "L" + Style.RESET_ALL, Style.BRIGHT + "S" + Style.RESET_ALL, Style.BRIGHT + "Titolo" + Style.RESET_ALL]
 next_keys = ("s", "S")
 prev_keys = ("p", "P")
-all_keys = next_keys + prev_keys
+quit_keys = ("q", "Q")
+all_keys = next_keys + prev_keys + quit_keys
 if (os.name != 'nt'):
     _, columns = os.popen('stty size', 'r').read().split()
 else:
@@ -211,7 +212,8 @@ def do_search(search_input, chunks_size):
             if (len(chunks) == 1) and (tot_pages == 1):
                 # If there is only one chunk and one page the user can
                 # only choose what to download.
-                while not valid_dl(command, prev_count, count):
+                while (not valid_dl(command, prev_count, count)
+                       and (command not in quit_keys)):
                     command = input(prompt_dl).strip()
             else:
                 if (cur_chunk == 0) and (cur_page == 1):
@@ -219,7 +221,7 @@ def do_search(search_input, chunks_size):
                     # first page, the user can either choose what do
                     # download or go to the next chunk.
                     while (not valid_dl(command, prev_count, count)
-                           and (command not in next_keys)):
+                           and (command not in next_keys + quit_keys)):
                         command = input(prompt_dl_next).strip()
 
                 elif ((cur_chunk == len(chunks) - 1)
@@ -228,7 +230,7 @@ def do_search(search_input, chunks_size):
                     # page, the user can either choose what to download
                     # or go to the previous chunk.
                     while (not valid_dl(command, prev_count, count)
-                           and (command not in prev_keys)):
+                           and (command not in prev_keys + quit_keys)):
                         command = input(prompt_dl_prev).strip()
                 else:
                     # Else, the user can choose what do wonload or go
@@ -297,6 +299,10 @@ def do_search(search_input, chunks_size):
                     wait_needed = True
 
                 # We're done. Exit the loop and quit.
+                break
+
+            elif (command in quit_keys):
+                clear_terminal()
                 break
 
     except (KeyboardInterrupt, EOFError) as _:
