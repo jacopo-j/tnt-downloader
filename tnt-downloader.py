@@ -42,7 +42,9 @@ title_str = Style.BRIGHT + "{}" + Style.RESET_ALL + "\n" + Style.DIM + "{}" + St
 count_str = Style.BRIGHT + "{:02}" + Style.RESET_ALL
 seed_str = Style.BRIGHT + Fore.GREEN + "{}" + Style.RESET_ALL
 leech_str = Style.BRIGHT + Fore.MAGENTA + "{}" + Style.RESET_ALL
-dloading_str = "Download del file {} di {} in corso..."
+# dloading_str = "Download del file {} di {} in corso..."
+# Per stampare anche il nome del file in corso di download oltre al numero
+dloading_str = "Download del file {} di {} - {}..."
 loading_str = "Caricamento dati in corso..."
 prompt_dl = "[#] Download / [q] Esci: "
 prompt_dl_next = "[#] Download / [s] Successivo / [q] Esci: "
@@ -284,7 +286,7 @@ def do_search(search_input, chunks_size):
                         # downloading our first file, we wait for a few
                         # seconds before downloading the next one.
                         sleep(2)
-                    print(dloading_str.format(idx + 1, len(dl_list)))
+                    
                     dl_url = search_tree.xpath(
                         dl_addr.format(result_rows[i]))[0]
                     result = requests.get(dl_url)
@@ -294,6 +296,10 @@ def do_search(search_input, chunks_size):
                     # with the correct name.
                     fname = re.findall(
                         "filename=(.+)", disp)[0].split("; ")[0][1:-1]
+
+                    # La modifica permette di stampare il nome del file in download e non solo il numero
+                    print(dloading_str.format(idx + 1, len(dl_list), fname))
+                    
                     with open(fname, "wb") as outfile:
                         outfile.write(result.content)
                     wait_needed = True
