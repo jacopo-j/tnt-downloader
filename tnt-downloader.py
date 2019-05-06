@@ -30,9 +30,13 @@ except NameError:
 progr_desc = "Cerca e scarica torrent da TNTVillage."
 query_desc = "termine di ricerca"
 more_desc = "mostra 21 risultati per pagina anzi che 7."
-search_url = "http://www.tntvillage.scambioetico.org/src/releaselist.php"
+search_url = "http://tntvillage.scambioetico.org/src/releaselist.php"
+referer = "http://tntvillage.scambioetico.org/?releaselist"
+user_agent = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) "
+              "AppleWebKit/605.1.15 (KHTML, like Gecko) "
+              "Version/12.1 Safari/605.1.15")
 tot_pag_addr = "//div[@class='pagination']/form/span/b[3]/text()"
-result_table_addr = "//div[@class='showrelease_tb']/table/tr"
+result_table_addr = "//div[@class='showrelease_tb'][last()]/table/tr"
 title_addr = "./td[7]/a/text()"
 desc_addr = "./td[7]/text()"
 leech_addr = "./td[4]/text()"
@@ -114,7 +118,9 @@ def do_search(search_input, chunks_size):
                     search_url,
                     data={"cat": "0",
                           "page": cur_page,
-                          "srcrel": search_input})
+                          "srcrel": search_input},
+                    headers={"Referer": referer,
+                             "User-Agent": user_agent})
                 search_tree = html.fromstring(result.content.decode('utf-8'))
 
                 # Total number of pages we got from our search
