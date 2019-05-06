@@ -295,7 +295,9 @@ def do_search(search_input, chunks_size):
                     
                     dl_url = search_tree.xpath(
                         dl_addr.format(result_rows[i]))[0]
-                    result = requests.get(dl_url)
+                    result = requests.get(dl_url,
+                        headers={"Referer": referer,
+                                 "User-Agent": user_agent})
                     disp = result.headers['content-disposition']
 
                     # We get the filename so that we can save the file
